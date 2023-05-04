@@ -1,6 +1,42 @@
 const gridListing = document.querySelector('.grid-listing')
+const searchInput = document.querySelector('#search-button')
+const filterButton = document.querySelector('#filter-button')
+const minPriceInput = document.querySelector('#min-price')
+const maxPriceInput = document.querySelector('#max-price')
+const minKmInput = document.querySelector('#min-km')
+const maxKmInput = document.querySelector('#max-km')
+const minYearInput = document.querySelector('#min-year')
+const maxYearInput = document.querySelector('#max-year')
+const brandInput = document.querySelector('#brand')
+const fuelInput = document.querySelector('#fuel-type')
 
-function createCarBox(image, model, brand, year, fuel, km, price) {
+const data = fetch('assets/data/data.json').then(r => {
+    return r.json()
+})
+
+function searchFunction() {
+    cleanGridListing()
+    data.then(cars => {
+        for(car of cars) {
+            if(car.modelo === searchInput.value || car.marca === searchInput.value){
+                createCarBox(car)
+            } 
+        }
+    })
+
+}
+
+function cleanGridListing() {
+    gridListing.innerHTML = ''
+}
+
+filterButton.addEventListener('click', function(e) {
+    e.preventDefault()
+    console.log(searchInput.value)
+    searchFunction()
+})
+
+function createCarBox(car) {
     // Cria container do carro
     let boxCar = document.createElement('div')
     boxCar.classList.add('box-car')
@@ -10,7 +46,7 @@ function createCarBox(image, model, brand, year, fuel, km, price) {
     // Cria o container da imagem e título do carro
     let imgContainer = document.createElement('div')
     imgContainer.classList.add('img-container')
-    imgContainer.style.backgroundImage = `url(${image})`
+    imgContainer.style.backgroundImage = `url(${car.image})`
     
     // Cria o container para a sombra da imagem, modelo e marca do carro
     let imgShadow = document.createElement('div')
@@ -52,12 +88,12 @@ function createCarBox(image, model, brand, year, fuel, km, price) {
     carPrice = document.createElement('h3')
 
     // Adicionando as informações do carro nas variáveis:
-    carModel.innerText = model
-    carBrand.innerText = brand
-    carYear.innerText = 'Ano: ' + year
-    carFuel.innerText = 'Combustível ' + fuel
-    carKm.innerText = km + 'km'
-    carPrice.innerText = "R$" + new Intl.NumberFormat('pt-BR').format(price);
+    carModel.innerText = car.modelo
+    carBrand.innerText = car.marca
+    carYear.innerText = 'Ano: ' + car.ano
+    carFuel.innerText = 'Combustível ' + car.combustivel
+    carKm.innerText = car.km + 'km'
+    carPrice.innerText = "R$" + new Intl.NumberFormat('pt-BR').format(car.preco);
 
     // Fazendo a cadeia familiar
     boxCarTitle.appendChild(carModel)
@@ -80,10 +116,10 @@ function createCarBox(image, model, brand, year, fuel, km, price) {
 
 }
 
-const data = fetch('assets/data/data.json').then(r => {
-    return r.json()
-}).then(cars => {
+data.then(cars => {
     for(car of cars) {
-        createCarBox(car.imagem, car.modelo, car.marca, car.ano, car.combustivel, car.km, car.preco)
+        createCarBox(car)
     }
 })
+
+
