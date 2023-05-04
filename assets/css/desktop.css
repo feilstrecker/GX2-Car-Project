@@ -1,0 +1,294 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background-color: rgb(241, 241, 241);
+    display: grid;
+    grid-template-columns: 0.5fr 1fr;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+}
+
+.header-main-container {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 15vw;
+    background-color: white;
+    width: 100%;
+    height: 5rem;
+    box-shadow: 0 0 2rem -1.3rem black;
+}
+
+#logo img {
+    width: 100px;
+    height: 100px;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5vw;
+    width: 30rem;
+    height: 100%;
+}
+
+nav a {
+    text-decoration: none;
+    text-transform: uppercase;
+    color: black;
+}
+
+nav a:hover {
+    font-weight: bold;
+    border-bottom: 1px solid black;
+}
+
+#header-spacing {
+    height: 5rem;
+    width: 100%;
+}
+
+aside {
+    background-color: white;
+    box-shadow: 0 0 2rem -1.3rem gray;
+    border-radius: 1rem;
+    width: 25rem;
+    height: 40rem;
+    margin: 3rem 0 0 3rem;
+}
+
+aside form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-container {
+    flex-direction: row;
+    gap: 4rem;
+    margin: 1rem auto 0 auto;
+}
+
+input, select, button {
+    padding: 0.3rem 0;
+    background-color: rgb(241, 241, 241);
+    border: none;
+    height: 2rem;
+    border-radius: 0.5rem;
+    width: 20rem;
+    font-size: 1.2rem;
+    font-weight: 100;
+    color: rgb(73, 73, 73);
+}
+
+
+label {
+    font-weight: 400;
+    font-size: 1.3rem;
+}
+
+.large-label {
+    width: 20rem;
+}
+
+.small-label, .small-input, .small-select, .small-button {
+    width: 8rem;
+}
+
+.medium-button {
+    width: 10rem;
+    height: 3rem;
+}
+
+.small-select {
+    height: 2.5rem;
+}
+
+.small-radio {
+    width: 1.5rem;
+}
+
+.form-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-filter-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+#new-cars {
+    width: 1.5rem;
+}
+
+.new-cars-group {
+    flex-direction: row;
+    margin: 1rem auto 0 auto;
+    gap: 1rem;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.medium-button, .small-button:hover {
+    font-weight: 400;
+}
+
+#filter-button {
+    background-color: blue;
+    color: white;
+}
+
+main {
+    margin-top: 3rem;
+    width: 100%;
+}
+
+.grid-listing {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    width: 85%;
+    height: 100%;
+}
+
+.box-car {
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+    background-color: white;
+    box-shadow: 0 0 2rem -1.3rem black;
+    border-radius: 0.5rem;
+    width: 15rem;
+    height: 20rem;
+    margin: 0 auto;
+}
+
+.img-container {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    border-top-right-radius: 0.5rem;
+    border-top-left-radius: 0.5rem;
+}
+
+.box-car-shadow {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    border-top-right-radius: 0.5rem;
+    border-top-left-radius: 0.5rem;
+    background: linear-gradient(130.71deg, #000 12.51%, rgba(0, 0, 0, 0) 81.19%);
+    color: white; 
+}
+
+.info-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.car-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    width: 80%;
+    height: 7rem;
+    text-align: left;
+}
+
+.car-details p {
+    font-weight: 300;
+}
+
+.box-car-price {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.3rem;
+    color: black;
+    width: 100%;
+    height: 3rem;
+    background: linear-gradient(to bottom, white, rgb(199, 254, 201))
+}
+
+hr {
+    width: 100%;
+    margin: 1rem auto;
+}
+
+.box-car-title {
+    margin-top: 1rem;
+    margin-left: 1rem;
+}
+
+.car-model {
+    font-weight: bold;
+}
+
+.car-brand {
+    font-weight: 400;
+}
+
+@media (max-width: 1400px) {
+    .header-main-container, #header-spacing {
+        height: 3rem;
+    }
+    aside {
+        margin: 1rem 1rem 0;
+        height: 36rem;
+    }
+
+    input, select, button, label {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 1470px) {
+    .grid-listing {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 1198px) {
+    .grid-listing {
+        grid-template-columns: repeat(2, 1fr);
+        width: 65%;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 1047px) {
+    .grid-listing {
+        margin: initial;
+    }
+}
