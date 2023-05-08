@@ -29,108 +29,107 @@
                 </div>
             </div>
         </div>
+        <div id="counter">
+        </div>
+        <div id="selected-cars-container">
+            <p id="selected-cars-element">Selecionado: 0 carro(s)</p>
+            <p id="total-value-element">Total: R$ 0</p>
+            <p id="mean-element">Mediana: R$ 0</p>
+            <p id="deviation-element">Desvio: 0km</p>
+        </div>
     </header>
-    <div id="header-spacing"></div>
-    <aside>
-        <form action="#">
-            <div class="form-group">
-                <label class="large-label" for="search-button">Pesquisar </label>
-                <input name="search-button" type="text" id="search-button" placeholder="Modelo, marca">
-            </div>
-            <div class="form-group input-container">
-                <div class="input-group">
-                <label for="min-price">Preço mínimo </label>
-                <input class="small-input" type="number" name="min-price" id="min-price">
-                </div>
-                <div class="input-group">
-                <label for="max-price">Preço máximo </label>
-                <input class="small-input" type="number" name="max-price" id="max-price">
-                </div>
-            </div>
-            <div class="form-group input-container">
-                <div class="input-group">
-                    <label class="small-label" for="min-km">Km mínimo </label>
-                    <input class="small-input" type="number" name="min-km" id="min-km">
-                </div>
-                <div class="input-group">
-                    <label class="small-label" for="max-km">Km máximo </label>
-                    <input class="small-input" type="number" name="max-km" id="max-km">
-                </div>
-            </div>
-            <div class="form-container">
-                <div class="form-group">
-                    <label for="brand">Marca </label>
-                    <select class="small-select" name="brand" id="brand">
-                        <option value="all">Todos(1)</option>
-                        <option value="volkswagen">Volkswagen(1)</option>
-                        <option value="chevrolet">Chevrolet(1)</option>
-                        <option value="chery">Chery(1)</option>
-                        <option value="renault">Renault(1)</option>
-                        <option value="ford">Ford(1)</option>
-                        <option value="honda">Honda(1)</option>
-                        <option value="toyota">Toyota(1)</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="min-year">Ano mínimo</label>
-                    <select class="small-select" name="min-year" id="min-year">
-                        <option value="1990">1990</option>
-                        <option value="1990">1990</option>
-                        <option value="1990">1990</option>
-                        <option value="1990">1990</option>
-                        <option value="1990">1990</option>
-                        <option value="1990">1990</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="fuel-type">Tipo de combustível </label>
-                    <select class="small-select" name="fuel-type" id="fuel-type">
-                        <option value="fuel1">Tipo 1</option>
-                        <option value="fuel2">Tipo 2</option>
-                        <option value="fuel3">Tipo 3</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="max-year">Ano máximo</label>
-                    <select class="small-select" name="max-year" id="max-year">
-                        <option value="1990">1990</option>
-                        <option value="1990">1990</option>
-                        <option value="1990">1990</option>
-                        <option value="1990">1990</option>
-                        <option value="1990">1990</option>
-                        <option value="1990">1990</option>
-                    </select>
-                </div>
-            </div>
-            <div class="new-cars-group form-group">
-                <input type="checkbox" name="new-cars" id="new-cars">
-                <label for="new-cars">Somente carros novos</label>
-            </div>
-            <div class="form-filter-container">
-                <div class="form-group">
-                    <label for="categories">Filtrar ordem</label>
-                    <select class="small-select" name="categories" id="categories">
-                        <option value="brand">Marca</option>
-                        <option value="model">Modelo</option>
-                        <option value="price">Preço</option>
-                        <option value="year">Ano</option>
-                        <option value="km">Km</option>
-                    </select>
-                    <label for="order">Crescente</label>
-                    <input class="small-radio" type="radio" name="order" id="growing">
-                    <label for="order">Decrescente</label>
-                    <input class="small-radio" type="radio" name="order" id="descending">
-                </div>
-                <div class="form-group buttons">
-                    <button class="small-button">Calcular moda</button>
-                    <button class="small-button">Calcular média</button>
-                    <button id="filter-button" class="medium-button">Filtrar modelo</button>
-                </div>
-            </div>
-        </form>
-    </aside>
     <main>
-        <div class="grid-listing">
+        <aside>
+            <form action="#">
+                <div class="form-group">
+                    <label class="large-label" for="search-button">Pesquisar </label>
+                    <input name="search-button" type="text" id="search-button" placeholder="Pesquisar por modelo, marca...">
+                </div>
+                <div class="form-group input-container">
+                    <div class="input-group">
+                    <label for="min-price">Preço mínimo </label>
+                    <input class="small-input" type="number" name="min-price" id="min-price">
+                    </div>
+                    <div class="input-group">
+                    <label for="max-price">Preço máximo </label>
+                    <input class="small-input" type="number" name="max-price" id="max-price">
+                    </div>
+                </div>
+                <div class="form-group input-container">
+                    <div class="input-group">
+                        <label class="small-label" for="min-km">Km mínimo </label>
+                        <input class="small-input" type="number" name="min-km" id="min-km">
+                    </div>
+                    <div class="input-group">
+                        <label class="small-label" for="max-km">Km máximo </label>
+                        <input class="small-input" type="number" name="max-km" id="max-km">
+                    </div>
+                </div>
+                <div class="form-container">
+                    <div class="form-group">
+                        <label for="brand">Marca </label>
+                        <select class="small-select" name="brand" id="brand">
+                            <option id="all">Todos</option>
+                            <option id="volkswagen">Volkswagen</option>
+                            <option id="chevrolet">Chevrolet</option>
+                            <option id="chery">Chery</option>
+                            <option id="renault">Renault</option>
+                            <option id="ford">Ford</option>
+                            <option id="honda">Honda</option>
+                            <option id="toyota">Toyota</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="min-year">Ano mínimo</label>
+                        <select class="small-select" name="min-year" id="min-year">
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label style="min-width: 186.9px;" for="fuel-type">Tipo de combustível </label>
+                        <select class="small-select" name="fuel-type" id="fuel-type">
+                            <option id="allFuel">Todos</option>
+                            <option id="alcool">Álcool</option>
+                            <option id="diesel">Diesel</option>
+                            <option id="eletric">Elétrico</option>
+                            <option id="flex">Flex</option>
+                            <option id="gasoline">Gasolina</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="max-year">Ano máximo</label>
+                        <select class="small-select" name="max-year" id="max-year">
+                        </select>
+                    </div>
+                </div>
+                <div class="new-cars-group form-group">
+                    <input type="checkbox" name="new-cars" id="new-cars">
+                    <label for="new-cars">Somente carros novos</label>
+                </div>
+                <div class="form-filter-container">
+                    <div class="form-group">
+                        <label for="categories">Filtrar ordem</label>
+                        <select class="small-select" name="categories" id="categories">
+                            <option></option>
+                            <option value="marca">Marca</option>
+                            <option value="modelo">Modelo</option>
+                            <option value="preco">Preço</option>
+                            <option value="ano">Ano</option>
+                            <option value="km">Km</option>
+                        </select>
+                        <label for="order">Crescente</label>
+                        <input class="small-radio" type="radio" name="order" id="growing">
+                        <label for="order">Decrescente</label>
+                        <input class="small-radio" type="radio" name="order" id="descending">
+                    </div>
+                    <div class="form-group buttons">
+                        <button id="mode-button" class="small-button">Calcular moda</button>
+                        <button id="mean-button" class="small-button">Calcular média</button>
+                        <button id="filter-button" class="medium-button">Filtrar modelo</button>
+                    </div>
+                </div>
+            </form>
+        </aside>
+        <div class="grid-listing"></div>
     </main>
 
     <script src="assets/js/index.js"></script>

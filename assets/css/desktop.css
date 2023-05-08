@@ -6,16 +6,21 @@
 
 body {
     background-color: rgb(241, 241, 241);
-    display: grid;
-    grid-template-columns: 0.5fr 1fr;
+    display: flex;
+    flex-direction: column;
+    
 }
 
 header {
     display: flex;
     flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .header-main-container {
+    z-index: 2;
     position: fixed;
     display: flex;
     align-items: center;
@@ -24,6 +29,7 @@ header {
     background-color: white;
     width: 100%;
     height: 5rem;
+    max-height: 5rem;
     box-shadow: 0 0 2rem -1.3rem black;
 }
 
@@ -33,6 +39,7 @@ header {
 }
 
 nav {
+    z-index: 2;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -52,9 +59,34 @@ nav a:hover {
     border-bottom: 1px solid black;
 }
 
-#header-spacing {
+#selectedCars {
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    right: 1rem;
+    top: 5.5rem;
+    width: 9rem;
     height: 5rem;
-    width: 100%;
+    background-color: rgba(68, 87, 255, 0.822);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: bold;
+    border-top-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
+
+#counter {
+    z-index: 1;
+    font-size: 1.1rem;
+    font-weight: lighter;
+    color: gray;
+    width: 10rem;
+    position: absolute;
+    top: 6rem;
+    left: 37.5vw;
 }
 
 aside {
@@ -105,6 +137,7 @@ input, select, button {
 label {
     font-weight: 400;
     font-size: 1.3rem;
+    word-break:break-all;
 }
 
 .large-label {
@@ -168,15 +201,18 @@ label {
 }
 
 main {
-    margin-top: 3rem;
+    margin-top: 5rem;
     width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .grid-listing {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
-    width: 85%;
+    margin: 3rem auto 0 auto;
+    width: 60%;
     height: 100%;
 }
 
@@ -189,6 +225,9 @@ main {
     width: 15rem;
     height: 20rem;
     margin: 0 auto;
+    cursor: pointer;
+    transition: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition-duration: 1s;
 }
 
 .img-container {
@@ -238,7 +277,7 @@ main {
     color: black;
     width: 100%;
     height: 3rem;
-    background: linear-gradient(to bottom, white, rgb(199, 254, 201))
+    border-radius: 0.5rem;
 }
 
 hr {
@@ -259,36 +298,116 @@ hr {
     font-weight: 400;
 }
 
-@media (max-width: 1400px) {
-    .header-main-container, #header-spacing {
-        height: 3rem;
+@media (min-width: 1765px) {
+    #counter {
+        left: 27vw;
     }
-    aside {
-        margin: 1rem 1rem 0;
-        height: 36rem;
-    }
-
-    input, select, button, label {
-        font-size: 1rem;
+    .grid-listing {
+        grid-template-columns: repeat(5, 1fr);
+        width: 80rem;
     }
 }
 
-@media (max-width: 1470px) {
+@media (max-width: 1538px) {
     .grid-listing {
         grid-template-columns: repeat(3, 1fr);
+        width: 48rem;
     }
 }
 
-@media (max-width: 1198px) {
+@media (max-width: 1220px) {
+    #counter {
+        left: 47.5vw;
+    }
+
     .grid-listing {
         grid-template-columns: repeat(2, 1fr);
-        width: 65%;
-        margin: 0 auto;
+        width: 32rem;
     }
 }
 
-@media (max-width: 1047px) {
+@media (max-width: 960px) {
+    #counter {
+        left: 43.5vw;
+    }
+
+    aside {
+        margin-left: 0.5rem;
+        width: 22rem;
+    }
     .grid-listing {
-        margin: initial;
+        width: 30.5rem;
+    }
+}
+
+@media (max-width: 862px) {
+    #counter {
+        left: 61vw;
+    }
+    .grid-listing {
+        grid-template-columns: 1fr;
+    }
+    aside {
+        width: 30rem;
+    }
+}
+
+@media (max-width: 666px) {
+    #counter {
+        top: 49rem;
+        left: 19vw;
+    }
+    main {
+        flex-direction: column;
+        align-items: center;
+    }
+    .box-car {
+        width: 25rem;
+        height: 30rem;
+    }
+
+    .car-details {
+        height: 8rem;
+        font-size: 1.4rem;
+    }
+
+    .box-car-price {
+        height: 7rem;
+        font-size: 2rem;
+    }
+    aside {
+        margin: 3rem 0 0 0;
+    }
+}
+
+@media (max-width: 484px) {
+    .grid-listing {
+        width: 100%;
+    }
+
+    aside {
+        width: 22rem;
+    }
+}
+
+@media (max-width: 400px) {
+    #counter {
+        top: 50rem;
+        left: 10vw;
+    }
+
+    .box-car {
+        width: 20rem;
+    }
+    aside {
+        margin: 4rem 0 0 0;
+        width: 21rem;
+    }
+    label {
+        font-size: 1rem;
+    }
+    #fuel-type, #brand {
+        margin-left: 0.1rem;
+        align-self: flex-start;
     }
 }
