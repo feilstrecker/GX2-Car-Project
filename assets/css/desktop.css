@@ -52,11 +52,16 @@ nav a {
     text-decoration: none;
     text-transform: uppercase;
     color: black;
+    padding: 0.5rem;
+    transition: ease;
+    transition-duration: 0.5s;
 }
 
 nav a:hover {
-    font-weight: bold;
-    border-bottom: 1px solid black;
+    transform: scale(1.1);
+    border-radius: 0.5rem;
+    color: white;
+    background-color: blue; 
 }
 
 #selectedCars {
