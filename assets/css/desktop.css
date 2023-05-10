@@ -1,7 +1,7 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Montserrat', sans-serif;
 }
 
 body {
@@ -34,8 +34,26 @@ header {
 }
 
 #logo img {
-    width: 100px;
-    height: 100px;
+    width: 200px;
+}
+
+#contact {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-right: 1rem;
+    transition: ease;
+    transition-duration: 0.5s;
+}
+
+#contact img {
+    width: 40px;
+    height: 40px;
+}
+
+#contact:hover {
+    transform: scale(1.1);
 }
 
 nav {
@@ -64,7 +82,7 @@ nav a:hover {
     background-color: blue; 
 }
 
-#selectedCars {
+#selected-cars-container {
     z-index: 2;
     display: flex;
     flex-direction: column;
@@ -81,6 +99,9 @@ nav a:hover {
     font-weight: bold;
     border-top-left-radius: 1rem;
     border-bottom-right-radius: 1rem;
+    transition: ease;
+    transition-duration: 1s;
+    transform: scale(0);
 }
 
 #counter {
@@ -90,7 +111,7 @@ nav a:hover {
     color: gray;
     width: 10rem;
     position: absolute;
-    top: 6rem;
+    top: 40rem;
     left: 37.5vw;
 }
 
@@ -98,8 +119,8 @@ aside {
     background-color: white;
     box-shadow: 0 0 2rem -1.3rem gray;
     border-radius: 1rem;
-    width: 25rem;
-    height: 40rem;
+    width: 26rem;
+    height: 42rem;
     margin: 3rem 0 0 3rem;
 }
 
@@ -115,15 +136,16 @@ aside form {
     flex-direction: column;
 }
 
-.input-group {
-    display: flex;
-    flex-direction: column;
+.input-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
 }
 
-.input-container {
-    flex-direction: row;
-    gap: 4rem;
-    margin: 1rem auto 0 auto;
+.input-container .input-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 input, select, button {
@@ -203,10 +225,118 @@ label {
 #filter-button {
     background-color: blue;
     color: white;
+    transition: ease;
+    transition-duration: 0.5s;
+}
+
+#filter-button:hover {
+    background-color: red;
+    transform: scale(1.2);
+}
+
+.car-offer {
+    width: 100%;
+    margin-top: 5rem;
+    padding: 2rem 0;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 30rem;
+    background-image: url('https://www.rondoniaveiculos.com.br/img/bg-header.jpg');
+}
+
+.car-offer-banner {
+    background-color: red;
+    width: 17rem;
+    margin: 0 auto;
+    border-radius: 1rem 1rem 0 0;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.car-offer-banner p {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.car-offer-main-container {
+    height: 27rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0rem 2rem -1.5rem black;
+    border-radius: 1rem;
+    width: 65rem;
+    margin: 0rem auto 0 auto;
+}
+
+.car-offer-img-container {
+    width: 500px;
+    height: 333px;
+    padding: 0 0.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 1.5rem -1rem black;
+    display: flex;
+}
+
+.car-offer-img-container img {
+    margin: auto;
+    border-radius: 0.5rem;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.car-offer-details {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    width: 400px;
+    height: 350px;
+}
+
+.car-offer-details button {
+    color: rgb(241, 241, 241);
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-align: center;
+    background-color: blue;
+    width: 10rem;
+    transition: ease;
+    transition-duration: 1s;
+}
+
+.car-offer-details button:hover {
+    transform: scale(1.2);
+    background-color: transparent;
+    border: 1px solid blue;
+    color: black;
+}
+
+strong {
+    color: green;
+}
+
+s {
+    color: orangered;
+}
+
+.car-offer-details h2, .car-offer-details h4 {
+    font-size: 2.5rem;
+}
+
+.car-offer-details h5 {
+    font-size: 1.5rem;
 }
 
 main {
-    margin-top: 5rem;
+    margin-top: 1rem;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -277,7 +407,7 @@ main {
 .box-car-price {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: start;
     font-size: 1.3rem;
     color: black;
     width: 100%;
@@ -303,7 +433,32 @@ hr {
     font-weight: 400;
 }
 
-@media (min-width: 1765px) {
+#mean-button, #mode-button {
+    font-size: 1rem;
+    font-weight: 300;
+    transition: ease;
+    transition-duration: 0.5s;
+}
+
+#mean-button:hover, #mode-button:hover {
+    transform: scale(1.1);
+    background-color: blue;
+    color: white;
+}
+
+@media (min-width: 2070px) {
+    .grid-listing {
+        grid-template-columns: repeat(6, 1fr);
+        width: 90rem;
+    }
+    .car-offer {
+        background-repeat: repeat;
+    }
+    .grid-listing {
+        margin: 3rem 3rem 0 3rem;
+    }
+}
+@media (min-width: 1765px) and (max-width: 2069px) {
     #counter {
         left: 27vw;
     }
@@ -311,9 +466,15 @@ hr {
         grid-template-columns: repeat(5, 1fr);
         width: 80rem;
     }
+    .car-offer {
+        background-repeat: repeat;
+    }
+    main {
+        justify-content: center;
+    }
 }
 
-@media (max-width: 1538px) {
+@media (max-width: 1548px) {
     .grid-listing {
         grid-template-columns: repeat(3, 1fr);
         width: 48rem;
@@ -329,6 +490,25 @@ hr {
         grid-template-columns: repeat(2, 1fr);
         width: 32rem;
     }
+}
+
+@media (max-width: 1043px) {
+    .car-offer-main-container {
+        width: 40rem;
+        height: 20rem;
+        padding: 0.5rem;
+    }
+    .car-offer-details {
+        transform: scale(0.8);
+    }
+    .car-offer-img-container {
+        height: auto;
+        padding: 0.5rem;
+    }
+    .header-main-container {
+        gap: 0.5rem;
+    }
+
 }
 
 @media (max-width: 960px) {
@@ -354,6 +534,21 @@ hr {
     }
     aside {
         width: 30rem;
+    }
+}
+
+@media (max-width: 709px) {
+    nav {
+        gap: 0.5rem;
+    }
+    nav a {
+        font-size: 0.8rem;
+    }
+    #logo img {
+        width: 130px;
+    }
+    #contact {
+        transform: scale(0.8);
     }
 }
 
@@ -385,6 +580,33 @@ hr {
     }
 }
 
+@media (max-width: 656px) {
+    .car-offer {
+        padding-top: 7rem;
+        padding-bottom: 7rem;
+    }
+    .car-offer-main-container {
+        padding: 2rem 1rem;
+        height: 35rem;
+        width: 80vw;
+        flex-direction: column-reverse;
+    }
+    .car-offer-img-container {
+        width: 80vw;
+    }
+    .car-offer-details {
+        align-items: center;
+        text-align: center;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 633px) {
+    #contact {
+        display: none;
+    }
+}
+
 @media (max-width: 484px) {
     .grid-listing {
         width: 100%;
@@ -393,16 +615,28 @@ hr {
     aside {
         width: 22rem;
     }
+
+    .box-car {
+        width: 15rem;
+        height: 20rem;
+    }
+    .car-details {
+        font-size: 1rem;
+    }
+
+    .box-car-price {
+        height: 2rem;
+        font-size: 1.2rem;
+    }
 }
 
 @media (max-width: 400px) {
+    nav a {
+        max-width: 4rem;
+    }
     #counter {
         top: 50rem;
         left: 10vw;
-    }
-
-    .box-car {
-        width: 20rem;
     }
     aside {
         margin: 4rem 0 0 0;
@@ -414,5 +648,51 @@ hr {
     #fuel-type, #brand {
         margin-left: 0.1rem;
         align-self: flex-start;
+    }
+}
+
+@media (max-width: 370px) {
+    #logo img {
+        width: 80px;
+    }
+    aside {
+        height: 35rem;
+        width: 17rem;
+    }
+    .small-label, .small-input, .small-select, .small-button {
+        width: 7rem;
+    }
+    #search-button, .large-label {
+        width: 14rem;
+        font-size: 0.9rem;
+        align-self: center;
+    }
+    #mean-button, #mode-button {
+        font-size: 0.7rem;
+    }
+    #filter-button {
+        width: 8rem;
+        font-size: 1rem;
+    }
+    .car-offer-details {
+        width: 80vw;
+    }
+    .car-offer-main-container {
+        height: 26rem;
+    }
+    .car-offer {
+        padding: 3rem 0 3rem 0;
+    }
+    .car-offer-banner {
+        width: 13rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .car-offer-banner p {
+        font-size: 1rem;
+    }
+    nav a {
+        font-size: 0.7rem;
     }
 }

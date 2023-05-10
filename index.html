@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/desktop.css">
     <title>Carros usados</title>
 </head>
@@ -22,7 +22,7 @@
                 <a href="#">Fale conosco</a>
             </nav>
             <div id="contact">
-                <img src="" alt="Phone icon">
+                <img src="assets/img/phone-icon.png" alt="Phone icon">
                 <div>
                     <p>Entre em contato</p>
                     <p><b>3333-3333</b></p>
@@ -38,6 +38,7 @@
             <p id="deviation-element">Desvio: 0km</p>
         </div>
     </header>
+
     <main>
         <aside>
             <form action="#">
@@ -61,12 +62,12 @@
                         <input class="small-input" type="number" name="min-km" id="min-km">
                     </div>
                     <div class="input-group">
-                        <label class="small-label" for="max-km">Km máximo </label>
+                        <label class="small-label" style="min-width: 130px;" for="max-km">Km máximo </label>
                         <input class="small-input" type="number" name="max-km" id="max-km">
                     </div>
                 </div>
                 <div class="form-container">
-                    <div class="form-group">
+                    <div class="form-group" style="margin: 0 auto;">
                         <label for="brand">Marca </label>
                         <select class="small-select" name="brand" id="brand">
                             <option id="all">Todos</option>
@@ -84,8 +85,8 @@
                         <select class="small-select" name="min-year" id="min-year">
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label style="min-width: 186.9px;" for="fuel-type">Tipo de combustível </label>
+                    <div class="form-group" style="margin: 0 auto;">
+                        <label for="fuel-type">Combustível </label>
                         <select class="small-select" name="fuel-type" id="fuel-type">
                             <option id="allFuel">Todos</option>
                             <option id="alcool">Álcool</option>

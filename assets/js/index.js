@@ -13,7 +13,6 @@ const categories = document.querySelector('#categories')
 const fuelInput = document.querySelector('#fuel-type')
 const newCarsCheckbox = document.querySelector('#new-cars')
 const counterElement = document.querySelector('#counter')
-const growingCheckbox = document.querySelector('#growing')
 const descendingCheckbox = document.querySelector('#descending')
 const meanButton = document.querySelector('#mean-button')
 const modeButton = document.querySelector('#mode-button')
@@ -22,9 +21,8 @@ const totalValueElement = document.querySelector('#total-value-element')
 const meanElement = document.querySelector('#mean-element')
 const deviationElement = document.querySelector('#deviation-element')
 const selectedCarsContainer = document.querySelector('#selected-cars-container')
-
 // Options
-const allOption = document.querySelector('#all')
+const allBrandOption = document.querySelector('#all')
 const volkswagenOption = document.querySelector('#volkswagen')
 const chevroletOption = document.querySelector('#chevrolet')
 const cheryOption = document.querySelector('#chery')
@@ -32,14 +30,12 @@ const renaultOption = document.querySelector('#renault')
 const fordOption = document.querySelector('#ford')
 const hondaOption = document.querySelector('#honda')
 const toyotaOption = document.querySelector('#toyota')
-
 const allFuelOption = document.querySelector('#allFuel')
 const flexOption = document.querySelector('#flex')
 const dieselOption = document.querySelector('#diesel')
 const gasolineOption = document.querySelector('#gasoline')
 const eletricOption = document.querySelector('#eletric')
 const alcoolOption = document.querySelector('#alcool')
-
 // Vars
 let minSelected = false
 let maxSelected = false
@@ -52,278 +48,150 @@ let filteredCars = []
 const data = fetch('assets/data/data.json').then(r => {
     return r.json()
 })
-
 // Função que adiciona quantos carros há de cada marca
-function brandCounterFunction() {
+function brandAndFuelCounterLoader() {
     data.then(cars => {
-        allOption.innerHTML += ` (${cars.length})`
-        toyotaOption.innerHTML += ` (${Object.keys(cars.filter(car => car.marca === "Toyota")).length})`
-        hondaOption.innerHTML += ` (${Object.keys(cars.filter(car => car.marca === "Honda")).length})`
-        fordOption.innerHTML += ` (${Object.keys(cars.filter(car => car.marca === "Ford")).length})`
-        renaultOption.innerHTML += ` (${Object.keys(cars.filter(car => car.marca === "Renault")).length})`
-        cheryOption.innerHTML += ` (${Object.keys(cars.filter(car => car.marca === "Chery")).length})`
-        chevroletOption.innerHTML += ` (${Object.keys(cars.filter(car => car.marca === "Chevrolet")).length})`
-        volkswagenOption.innerHTML += ` (${Object.keys(cars.filter(car => car.marca === "Volkswagen")).length})`
-    })
-}
-
-// Função que adiciona quantos carros há de cada tipo de combustível
-function fuelCounterFunction() {
-    data.then(cars => {
+        const brandOptions = {'Toyota':toyotaOption, 'Honda':hondaOption, 'Ford':fordOption, 'Renault':renaultOption, 'Chery':cheryOption, 'Chevrolet':chevroletOption, 'Volkswagen':volkswagenOption}
+        const fuelOptions = {'Flex':flexOption, 'Diesel':dieselOption, 'Gasolina':gasolineOption, 'Elétrico':eletricOption, 'Álcool':alcoolOption}
+        allBrandOption.innerHTML += ` (${cars.length})`
         allFuelOption.innerHTML += ` (${cars.length})`
-        flexOption.innerHTML += ` (${Object.keys(cars.filter(car => car.combustivel === "Flex")).length})`
-        dieselOption.innerHTML += ` (${Object.keys(cars.filter(car => car.combustivel === "Diesel")).length})`
-        gasolineOption.innerHTML += ` (${Object.keys(cars.filter(car => car.combustivel === "Gasolina")).length})`
-        eletricOption.innerHTML += ` (${Object.keys(cars.filter(car => car.combustivel === "Elétrico")).length})`
-        alcoolOption.innerHTML += ` (${Object.keys(cars.filter(car => car.combustivel === "Álcool")).length})`
+        Object.entries(brandOptions).map((option, index) => { option[1].innerHTML += ` (${Object.keys(cars.filter(car => car.marca === option[0])).length})` })
+        Object.entries(fuelOptions).map((option, index) => { option[1].innerHTML += ` (${Object.keys(cars.filter(car => car.combustivel === option[0])).length})` })
     })
 }
-
 // Função para o input 'Pesquisar'
 function searchFunction(callback) {
-    const filtedCars = []
-    // Se o valor da pesquisa for igual a '', carrega os cards novamente.
-    if (searchInput.value === '') {
-        data.then(cars => {
-            for(car of cars) {
-                filtedCars.push(car)
-            }
-        })
-    }
-    // Captalize
-    searchInput.value = searchInput.value.charAt(0).toUpperCase() + searchInput.value.slice(1);
-
-    // Carrega o json e adiciona os carros que se encaixam no valor da pesquisa
+    const foundCars = []
     data.then(cars => {
-        for(car of cars) {
-            if(car.modelo === searchInput.value || car.marca === searchInput.value){
-                if(!filtedCars.includes(car)) {
-                    filtedCars.push(car)
-                }
+        cars.map((car, index) => {
+            if(searchInput.value === '') foundCars.push(car)
+            else if(car.modelo.toUpperCase() === searchInput.value.toUpperCase() || car.marca.toUpperCase() === searchInput.value.toUpperCase()){
+                if(!foundCars.includes(car)) foundCars.push(car)
             } 
-        }
-        filteredCars = filtedCars
+        })
+        filteredCars = foundCars
         if(callback) callback()
     })
-
 }
 
 // Função para os inputs de preço
 function minAndMaxPrice() {
-    let filtedCars = []
+    const foundCars = []
     // Se possuir valor no input de preço máximo e mínimo
     if(minPriceInput.value != '' && maxPriceInput.value != '') {
-        for(car of filteredCars) {
+        filteredCars.map((car, index) => {
             // Verifica se o preço do carro se encaixa no preço mínimo e máximo dos inputs
-            if(car.preco >= parseInt(minPriceInput.value) && car.preco <= parseInt(maxPriceInput.value)) {
-                // Se sim, cria o card do carro
-                filtedCars.push(car)
-            }
-        }
-    
+            if(car.preco >= parseInt(minPriceInput.value) && car.preco <= parseInt(maxPriceInput.value)) foundCars.push(car)
+        })
     }
     // Se possuir valor apenas no input de preço mínimo
     else if(minPriceInput.value != '') {
-        for(car of filteredCars) {
+        filteredCars.map((car, index) => {
             // Verifica se o preço é maior ou igual ao preço mínimo do input
-            if(car.preco >= parseInt(minPriceInput.value)) {
-                filtedCars.push(car)
-            }
-        }
+            if(car.preco >= parseInt(minPriceInput.value)) foundCars.push(car)
+        })
     }
     // Se possuir valor apenas no input de preço máximo
     else if(maxPriceInput.value != '') {
-        for(car of filteredCars) {
+        filteredCars.map((car, index) => {
             // Verifica se o preço é menor ou igual ao preço máximo do input
-            if(car.preco <= parseInt(maxPriceInput.value)) {
-                filtedCars.push(car)
-            }
-        }
-    } else {
-        filtedCars = filteredCars
-    }
-    
-    filteredCars = filtedCars
+            if(car.preco <= parseInt(maxPriceInput.value)) foundCars.push(car)
+        })
+    } else return minAndMaxKm()
+    filteredCars = foundCars
     minAndMaxKm()
-    
 }
 
 // Função para os inputs de quilometragem
 function minAndMaxKm() {
-    let filtedCars = []
+    let foundCars = []
     // Se possuir valor no input de preço máximo e mínimo
     if(minKmInput.value != '' && maxKmInput.value != '') {
-        for(car of filteredCars) {
-            // Verifica se o preço do carro se encaixa no preço mínimo e máximo dos inputs
-            if(car.km >= parseInt(minKmInput.value) && car.km <= parseInt(maxKmInput.value)) {
-                // Se sim, cria o card do carro
-                filtedCars.push(car)
-            }
-        }
+        foundCars = filteredCars.filter(car => car.km >= parseInt(minKmInput.value) && car.km <= parseInt(maxKmInput.value))
     }
     // Se possuir valor apenas no input de preço mínimo
     else if(minKmInput.value != '') {
-        for(car of filteredCars) {
-            // Verifica se o preço é maior ou igual ao preço mínimo do input
-            if(car.km >= parseInt(minKmInput.value)) {
-                filtedCars.push(car)
-            }
-        }
+        foundCars = filteredCars.filter(car => car.km >= parseInt(minKmInput.value))
     }
     // Se possuir valor apenas no input de preço máximo
     else if(maxKmInput.value != '') {
-        for(car of filteredCars) {
-            // Verifica se o preço é menor ou igual ao preço máximo do input
-            if(car.km <= parseInt(maxKmInput.value)) {
-                filtedCars.push(car)
-            }
-        }
-    } else {
-        filtedCars = filteredCars
-    }
+        foundCars = filteredCars.filter(car => car.km <= parseInt(maxKmInput.value))
+    } else return onlyOneBrand()
 
-    filteredCars = filtedCars
-    onlyOneBrand()
-    
+    filteredCars = foundCars
+    onlyOneBrand()   
 }
 
 // Filtra somente carros novos (0km)
 function onlyNewCars() {
-    let filtedCars = []
+    let foundCars = []
     if(newCarsCheckbox.checked === true) {
-        for(car of filteredCars) {
-            if(car.km === 0) {
-                filtedCars.push(car)
-            }
-        }
-    } else {
-        filtedCars = filteredCars
+        foundCars = filteredCars.filter(car => car.km === 0)
+        filteredCars = foundCars
     }
-    filteredCars = filtedCars
     sortByCategory()
 }
 
 // Filtra por marca
 function onlyOneBrand() {
-    let filtedCars = []
-    // Retira o contador da marca e faz captalize para se encaixar na propriedade do json
-    const splittedInputValue = brandInput.value.split(' ')[0]
-    const inputValue = splittedInputValue.charAt(0).toUpperCase() + splittedInputValue.slice(1);
-    if(inputValue === 'Todos') {
-        filtedCars = filteredCars
+    let foundCars = []
+    // Retira o contador da marca
+    const inputValue = brandInput.value.split(' ')[0]
+
+    if(inputValue != 'Todos' && inputValue != '' && inputValue) {
+        foundCars = filteredCars.filter(car => car.marca.toUpperCase() === inputValue.toUpperCase())
+        filteredCars = foundCars
     }
-    else if(inputValue) {
-        for(car of filteredCars) {
-            if(car.marca === inputValue) {
-                filtedCars.push(car)
-            }
-        }
-    } else {
-        filtedCars = filteredCars
-    }
-    filteredCars = filtedCars
     minAndMaxYear()
 }
 
 function minAndMaxYear() {
-    let filtedCars = []
+    let foundCars = []
     // Se possuir valor no input de ano máximo e mínimo
     if(minYearInput.value != '' && maxYearInput.value != '') {
-        for(car of filteredCars) {
-            // Verifica se o ano do carro se encaixa no ano mínimo e máximo dos inputs
-            if(car.ano >= parseInt(minYearInput.value) && car.ano <= parseInt(maxYearInput.value)) {
-                // Se sim, cria o card do carro
-                filtedCars.push(car)
-            }
-        }
+        foundCars = filteredCars.filter(car => car.ano >= parseInt(minYearInput.value) && car.ano <= parseInt(maxYearInput.value))
     }
     // Se possuir valor apenas no input de preço mínimo
     else if(minYearInput.value != '') {
-        for(car of filteredCars) {
-            // Verifica se o preço é maior ou igual ao preço mínimo do input
-            if(car.ano >= parseInt(minYearInput.value)) {
-                filtedCars.push(car)
-            }
-        }
+        foundCars = filteredCars.filter(car => car.ano >= parseInt(minYearInput.value))
     }
     // Se possuir valor apenas no input de preço máximo
     else if(maxYearInput.value != '') {
-        for(car of filteredCars) {
-            // Verifica se o preço é menor ou igual ao preço máximo do input
-            if(car.ano <= parseInt(maxYearInput.value)) {
-                filtedCars.push(car)
-            }
-        }
-    } else {
-        filtedCars = filteredCars
-    }
+        foundCars = filteredCars.filter(car => car.ano <= parseInt(maxYearInput.value))
+    } else onlyOneFuel()
 
-    filteredCars = filtedCars
+    filteredCars = foundCars
     onlyOneFuel()
 }
 
 // Filtra por tipo de combustível
 function onlyOneFuel() {
-    let filtedCars = []
-    // Retira o contador da marca e faz captalize para se encaixar na propriedade do json
-    const splittedInputValue = fuelInput.value.split(' ')[0]
-    const inputValue = splittedInputValue.charAt(0).toUpperCase() + splittedInputValue.slice(1);
-    if(inputValue === 'Todos') {
-        filtedCars = filteredCars
+    const inputValue = fuelInput.value.split(' ')[0]
+    let foundCars = []
+
+    if(inputValue != 'Todos' && inputValue != '' && inputValue) {
+        foundCars = filteredCars.filter(car => car.combustivel.toUpperCase() === inputValue.toUpperCase())
+        filteredCars = foundCars
     }
-    else if(inputValue) {
-        for(car of filteredCars) {
-            if(car.combustivel === inputValue) {
-                filtedCars.push(car)
-            }
-        }
-    } else {
-        filtedCars = filteredCars
-    }
-    filteredCars = filtedCars
     onlyNewCars()
 }
 
 // Função que adiciona as opções de anos máximos
-function createMinYear() {
+function createMinAndMaxYear() {
     const years = []
     data.then(cars => {
-        for(car of cars) {
-            if(!years.includes(car.ano)) {
-                years.push(car.ano)
-            }
-        }
+        cars.map((car, index) => { if(!years.includes(car.ano)) years.push(car.ano) })
         years.sort()
-        const minyearElement = document.createElement('option')
-        minYearInput.appendChild(minyearElement)
-
-        for(year of years) {
-            const minyearElement = document.createElement('option')
-            minyearElement.innerHTML = year
-            minYearInput.appendChild(minyearElement)
-        }
-    })
-} 
-
-// Função que adiciona as opções de anos mínimos
-function createMaxYear() {
-    maxYearInput.innerHTML = ''
-    const years = []
-    data.then(cars => {
-        for(car of cars) {
-            if(!years.includes(car.ano)) {
-                years.push(car.ano)
-            }
-        }
-        years.sort()
-        const maxyearElement = document.createElement('option')
-        maxYearInput.appendChild(maxyearElement)
-
-        for(year of years) {
-            const maxyearElement = document.createElement('option')
-            maxyearElement.innerHTML = year
-            maxYearInput.appendChild(maxyearElement)
-        }
+        minYearInput.appendChild(document.createElement('option'))
+        maxYearInput.appendChild(document.createElement('option'))
+        years.map((year, index) => {
+            const minYearElement = document.createElement('option')
+            const maxYearElement = document.createElement('option')
+            minYearElement.innerHTML = year
+            maxYearElement.innerHTML = year
+            minYearInput.appendChild(minYearElement)
+            maxYearInput.appendChild(maxYearElement)
+        })
     })
 } 
 
@@ -334,84 +202,32 @@ function cleanGridListing() {
 
 // Cria o card do carro
 function createCarBox(car) {
-    // Cria container do carro
-    let boxCar = document.createElement('div')
+    const boxCar = document.createElement('div')
     boxCar.classList.add('box-car')
-
-    // ====================================
-
-    // Cria o container da imagem e título do carro
-    let imgContainer = document.createElement('div')
-    imgContainer.classList.add('img-container')
-    imgContainer.style.backgroundImage = `url(${car.imagem})`
-    
-    // Cria o container para a sombra da imagem, modelo e marca do carro
-    let imgShadow = document.createElement('div')
-    imgShadow.classList.add('box-car-shadow')
-
-    // Cria container para o título do carro
-    let boxCarTitle = document.createElement('div')
-    boxCarTitle.classList.add('box-car-title')
-
-    // Cria h3 para modelo e h4 para ano do carro
-    let carModel = document.createElement('h3')
-    let carBrand = document.createElement('h4')
-
-    carModel.classList.add('car-model')
-    carBrand.classList.add('car-brand')
-
-    // ====================================
-    
-    // Cria container geral para informações do carro: Ano, tipo de combustível,
-    // quilometragem e preço
-    carInfo = document.createElement('div')
-    carInfo.classList.add('info-container')
-
-    // Cria container para ano, combustível e quilometragem e um hr
-    carDetails = document.createElement('div')
-    carDetails.classList.add('car-details')
-
-    // Cria os parágrafos para ano, combustível e quilometragem (e a tag hr)
-    carYear = document.createElement('p')
-    carFuel = document.createElement('p')
-    carKm = document.createElement('p')
-    hr = document.createElement('hr')
-
-    // Cria o container para o preço do carro
-    boxCarPrice = document.createElement('div')
-    boxCarPrice.classList.add('box-car-price')
-
-    // Cria h3 para o preço do carro
-    carPrice = document.createElement('h3')
-
-    // Adicionando as informações do carro nas variáveis:
-    carModel.innerText = car.modelo
-    carBrand.innerText = car.marca
-    carYear.innerText = 'Ano: ' + car.ano
-    carFuel.innerText = 'Combustível: ' + car.combustivel
-    carKm.innerText = car.km + 'km'
-    carPrice.innerText = "R$" + new Intl.NumberFormat('pt-BR').format(car.preco);
-
-    // Fazendo a cadeia familiar
-    boxCarTitle.appendChild(carModel)
-    boxCarTitle.appendChild(carBrand)
-    boxCarPrice.appendChild(carPrice)
-
-    carDetails.appendChild(carYear)
-    carDetails.appendChild(carFuel)
-    carDetails.appendChild(carKm)
-    carDetails.appendChild(hr)
-
-    imgShadow.appendChild(boxCarTitle)
-
-    carInfo.appendChild(carDetails)
-    carInfo.appendChild(boxCarPrice)
-    imgContainer.appendChild(imgShadow)
-    boxCar.appendChild(imgContainer)
-    boxCar.appendChild(carInfo)
+    const boxCarHtml = `
+        <div class="img-container" style="background-image: url(${car.imagem})">
+            <div class="box-car-shadow">
+                <div class="box-car-title">
+                    <h3 class="car-model">${car.modelo}</h3>
+                    <h4 class="car-brand">${car.marca}</h4>
+                </div>
+            </div>
+        </div>
+        <div class="info-container">
+            <div class="car-details">
+                <p>Ano: ${car.ano}</p>
+                <p>Combustível: ${car.combustivel}</p>
+                <p>${car.km}km</p>
+                <hr>
+            </div>
+            <div class="box-car-price">
+                <h3>R$ ${new Intl.NumberFormat('pt-BR').format(car.preco)},00</h3>
+            </div>
+        </div>
+    `
+    boxCar.innerHTML = boxCarHtml
     gridListing.appendChild(boxCar)
     this.selected = false
-
     // Event listener
     boxCar.addEventListener('click', function(e) {
         if(boxCar.style.background == 'linear-gradient(white, white, white, rgb(143, 255, 143))') {
@@ -420,7 +236,7 @@ function createCarBox(car) {
             this.selected = false
             selectedCars -= 1
             delTotalValue(car.preco)
-            delValueMedian(car.preco)
+            delValueMedian(car.km)
             delValueDeviation(car.km)
         } else {
             boxCar.style.background = 'linear-gradient(white, white, white, rgb(143, 255, 143))'
@@ -428,22 +244,15 @@ function createCarBox(car) {
             this.selected = true
             selectedCars += 1
             addTotalValue(car.preco)
-            addValueMedian(car.preco)
+            addValueMedian(car.km)
             addValueDeviation(car.km)
-
         }
-        if(selectedCars == 0) {
-            selectedCarsContainer.style.display = ''
-            selectedCarsContainer.id = ''
-        } else {
-            selectedCarsContainer.style.display = 'flex'
-            selectedCarsContainer.id = 'selectedCars'
-        }
+        if(selectedCars == 0) selectedCarsContainer.style.transform = 'scale(0)'
+        else selectedCarsContainer.style.transform = 'scale(1)'
         refreshSelectedCars()
         calculateMean()
         calculateDeviation()
     })
-
 }
 
 function refreshSelectedCars() {
@@ -458,16 +267,15 @@ function delTotalValue(preco) {
     totalValue -= preco
     totalValueElement.innerHTML = 'Total: R$' + new Intl.NumberFormat('pt-BR').format(totalValue)
 }
-function addValueMedian(preco) {
-    meanArray.push(preco)
+function addValueMedian(km) {
+    meanArray.push(km)
 }
-function delValueMedian(preco) {
-    const index = meanArray.indexOf(preco)
+function delValueMedian(km) {
+    const index = meanArray.indexOf(km)
     meanArray.splice(index, 1)
 }
 function calculateMean() {
     let mean = 0
-
     meanArray.sort((a, b) => a - b)
     const len = meanArray.length
     if(len % 2 === 0) {
@@ -477,21 +285,16 @@ function calculateMean() {
         const middle = Math.floor(len / 2)
         mean = meanArray[middle]
     }
-    if(!mean) {
-        mean = 0
-    }
-    meanElement.innerHTML = "Mediana: R$" + new Intl.NumberFormat('pt-BR').format(mean)
+    if(!mean) mean = 0
+    meanElement.innerHTML = "Mediana: " + new Intl.NumberFormat('pt-BR').format(mean) + 'km'
 }
-
 // Calcula o desvio padrão
 function calculateDeviation() {
     const mean = deviationArray.reduce((a, b) => a + b, 0) / deviationArray.length; 
     const cubeDiferrence = deviationArray.map(value => Math.pow(value - mean, 2)); 
     const som = cubeDiferrence.reduce((a, b) => a + b, 0); 
     let deviation = Math.sqrt(som / (deviationArray.length - 1));
-    if(!deviation) {
-        deviation = 0
-    }
+    if(!deviation) deviation = 0
     deviationElement.innerHTML = 'Desvio: ' + parseInt(deviation) + 'km'
 }
 
@@ -502,59 +305,31 @@ function delValueDeviation(preco) {
     const index = deviationArray.indexOf(preco)
     deviationArray.splice(index, 1)
 }
-
 // Carrega os cards ao entrar na página
 function loadCards() {
     cleanGridListing()
     data.then(cars => {
-        const carNames = []
-
-        // Mescla o modelo e o id do carro numa string só, para a seguinte lógica:
-        // Utilizamos o sort para deixarmos os carros em ordem alfabética e em seguida
-        // pegamos seu id para adicioná-lo a página
-        for(car of cars) {
-            carNames.push(`${car.modelo}|${car.id}`)
-        }
-        carNames.sort()
-        for(carName of carNames) {
-            for(car of cars) {
-                if(car.id == parseInt(carName.split('|')[1])) {
-                    createCarBox(car)
-                }
-            }
-        }
+        cars.sort(compareByModel)
+        cars.map((car, index) => {
+            createCarBox(car)
+        })
     })
 }
-
 // Ordenar por categoria
 function sortByCategory() {
     if(categories.value !== '') {
         const category = categories.value
-        if(category === 'preco') {
-            filteredCars.sort(compareByPrice)
-        } else if(category === 'marca') {
-            filteredCars.sort(compareByBrand)
-        } else if(category === 'ano') {
-            filteredCars.sort(compareByYear)
-        } else if(category === 'km') {
-            filteredCars.sort(compareByKm)
-        } else if(category === 'modelo') {
-            filteredCars.sort(compareByModel)
-        }
-        if(descendingCheckbox.checked) {
-            filteredCars.reverse()
-        }
-        for(car of filteredCars) {
-            createCarBox(car)
-        }
-    } else {
-        for(car of filteredCars) {
-            createCarBox(car)
-        }
+        if(category === 'preco') filteredCars.sort(compareByPrice)
+        else if(category === 'marca') filteredCars.sort(compareByBrand)
+        else if(category === 'ano') filteredCars.sort(compareByYear)
+        else if(category === 'km') filteredCars.sort(compareByKm)
+        else filteredCars.sort(compareByModel)
+
+        if(descendingCheckbox.checked) filteredCars.reverse()
     }
+    filteredCars.map((car, index) => { createCarBox(car) })
     loadCounter()
 }
-
 // Funções para alterar a ordem dos cards exibidos
 function compareByBrand(a, b) {
     return a.marca.localeCompare(b.marca)
@@ -574,61 +349,30 @@ function compareByYear(a, b) {
     if(a.ano < b.ano) return -1
     if(a.ano > b.ano) return 0
 }
-
 // Calcula a média
 function meanCalculate() {
     let price = 0
     let counter = 0
-
-    for(box of gridListing.children) {
-        const boxPrice = box.querySelector('.box-car-price')
+    Object.entries(gridListing.children).map(([key, value]) => {
+        const boxPrice = value.querySelector('.box-car-price')
         const priceText = boxPrice.innerText.replace('R$', '')
         price += parseInt(priceText)
         counter ++
-    }
+    })
     meanButton.innerHTML = 'R$' + parseInt(price/counter) + ' mil'
 }
-
 // Calcula a moda
 function modeCalculate() {
-    let year1 = 0
-    let year2 = 0
-    let year3 = 0
-    let year4 = 0
-    let year5 = 0
-    let year6 = 0
-    let year7 = 0
-    let i = 0
-    const yearsList = []
-    let mostYear = 0
-    let modeYear = 0
-
     data.then(cars => {
-        for(car of cars) {
-            yearsList.push(car.ano)
-        }
-        yearsList.sort()
-        for(box of gridListing.children) {
-            const carDetails = box.querySelector('.car-details')
-            let thisYear = carDetails.children[0]
-            let splitted = thisYear.innerHTML.split(' ')[1]
-            if(parseInt(splitted) === yearsList[0]) year1++
-            if(parseInt(splitted) === yearsList[1]) year2++
-            if(parseInt(splitted) === yearsList[2]) year3++
-            if(parseInt(splitted) === yearsList[3]) year4++
-            if(parseInt(splitted) === yearsList[4]) year5++
-            if(parseInt(splitted) === yearsList[5]) year6++
-            if(parseInt(splitted) === yearsList[6]) year7++
-        }
-        for(year of [year1, year2, year3, year4, year5, year6, year7]) {
-            if(year > mostYear) {
-                mostYear = year
-                modeYear = yearsList[i]
-            }
-            i++
-        }
-    
-        modeButton.innerHTML = modeYear
+        let count = {}
+        const yearsArray = cars.map((car, index) => {return car.ano})
+        yearsArray.map((year, index) => {
+            if(count[year]) count[year]++
+            else count[year] = 1
+        })
+        const countEntries = Object.entries(count)
+        countEntries.sort((a, b) => b[1] - a[1])
+        modeButton.innerHTML = countEntries[0][0]
     })
 }
 
@@ -636,7 +380,6 @@ function resetMeanAndModeButtonText() {
     meanButton.innerText = 'Calcular moda'
     modeButton.innerText = 'Calcular média'
 }
-
 // Carrega a quantidade de carros filtrados
 function loadCounter() {
     const counter = gridListing.children.length
@@ -647,70 +390,101 @@ function loadCounter() {
         counterElement.appendChild(pCounter)
     }
 }
+// Adiciona o carro mais barato em oferta
+function addOfferCar() {
+    data.then(cars => {
+        cars.sort(compareByPrice)
+        const car = cars[0]
+        const carOfferElement = document.createElement('div')
+        carOfferElement.classList.add('car-offer')
+        const carOfferHtml = `
+            <div class="car-offer-banner">
+                <p id="timer">Faltam: 3h 0m 0s</p>
+            </div>
+            <div class="car-offer-main-container">
+                <div class="car-offer-details">
+                    <div class="car-offer-model-and-brand-container">
+                        <h2 class="car-offer-model">${car.modelo}</h2>
+                        <h3 class="car-offer-brand">${car.marca}</h3>
+                    </div>
+                    <p class="car-offer-year-and-km">${car.ano} | ${car.km}km</p>
+                    <div class="car-offer-price-container">
+                        <h5 class="car-offer-old-price">de <s>R$R$${new Intl.NumberFormat('pt-BR').format(car.preco)},00</s></h5>
+                        <h4 class="car-offer-new-price">por <strong>R$${new Intl.NumberFormat('pt-BR').format(car.preco - (car.preco/100)*20)},00</strong></h4>
+                    </div>
+                    <button>Mais detalhes</button>
+                </div>
+                <div class="car-offer-img-container">
+                    <img id="car-offer-img" src="${car.imagem}" alt="Car photo">
+                </div>
+            </div>
+        `
+        carOfferElement.innerHTML = carOfferHtml
+        document.querySelector('header').insertAdjacentElement("afterend", carOfferElement)  
+    })
+}
 
+function addOfferTimer() {
+    let start = new Date().getTime();
+    let end = start + (3 * 60 * 60 * 1000);
+
+    // Atualiza o timer a cada segundo
+    let x = setInterval(function() {
+        let now = new Date().getTime();
+
+        let distance = end - now;
+        let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        const timer = document.querySelector('#timer')
+        timer.innerText = `Faltam: ${hours}h ${minutes}m ${seconds}s`
+
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("timer").innerHTML = "Encerrado";
+        }
+    }, 1000);
+}
 // EventListener para alterar as options do ano máximo quando colocado um ano mínimo
 minYearInput.addEventListener('change', function(e) {
-    e.preventDefault()
-    let maxValue = 0
-    if(maxSelected) {
-        maxValue = maxYearInput.value
-    } 
-
-    if(minYearInput.value != '') {
-        minSelected = true
+    if(minYearInput.value === '') minSelected = false
+    else {
+        minSelected = parseInt(minYearInput.value)
+        maxYearInput.innerHTML = ''
         data.then(cars => {
-            cars.sort(compareByYear)
-            for(car of cars) {
-                if(car.ano >= minYearInput.value) {
-                    yearsElements = maxYearInput.innerText.split('\n')
-                    if(yearsElements.includes(`${car.ano}`)) {
-                    } else {
-                        const yearElement = document.createElement('option')
-                        yearElement.innerText = car.ano
-                        maxYearInput.appendChild(yearElement)
-                    }
-
+            const yearsArray = cars.map((car, index) => {return car.ano})
+            const cleanedYearsArray = yearsArray.filter((value, index, self) => self.indexOf(value) === index).sort()
+            cleanedYearsArray.map((year, index) => {
+                if(year >= parseInt(minYearInput.value)) {
+                    const yearElement = document.createElement('option')
+                    yearElement.innerHTML = year
+                    maxYearInput.appendChild(yearElement)
                 }
-            }
-            if(maxSelected) {
-                maxYearInput.value = maxValue
-            }
+                if(maxSelected) maxYearInput.value = maxSelected
+                else maxYearInput.value = ''
+            })
         })
-    } else {
-        minSelected = false
     }
 })
-
 // EventListener para alterar as options do ano mínimo quando colocado um ano máximo
 maxYearInput.addEventListener('change', function(e) {
-    e.preventDefault()
-    let minValue = 0
-    if(minSelected) {
-        minValue = minYearInput.value
-    } 
-
-    if(maxYearInput.value != '') {
-        maxSelected = true
+    if(maxYearInput.value === '') maxSelected = false
+    else {
+        maxSelected = parseInt(maxYearInput.value)
+        minYearInput.innerHTML = ''
         data.then(cars => {
-            cars.sort(compareByYear)
-            for(car of cars) {
-                if(car.ano >= maxYearInput.value) {
-                    yearsElements = minYearInput.innerText.split('\n')
-                    if(yearsElements.includes(`${car.ano}`)) {
-                    } else {
-                        const yearElement = document.createElement('option')
-                        yearElement.innerText = car.ano
-                        minYearInput.appendChild(yearElement)
-                    }
-
+            const yearsArray = cars.map((car, index) => {return car.ano})
+            const cleanedYearsArray = yearsArray.filter((value, index, self) => self.indexOf(value) === index).sort()
+            cleanedYearsArray.map((year, index) => {
+                if(year <= parseInt(maxYearInput.value)) {
+                    const yearElement = document.createElement('option')
+                    yearElement.innerHTML = year
+                    minYearInput.appendChild(yearElement)
                 }
-            }
-            if(minSelected) {
-                minYearInput.value = minValue
-            }
+                if(minSelected) minYearInput.value = minSelected
+                else minYearInput.value = ''
+            })
         })
-    } else {
-        maxSelected = false
     }
 })
 
@@ -719,7 +493,6 @@ filterButton.addEventListener('click', function(e) {
     cleanGridListing()
     resetMeanAndModeButtonText()
     searchFunction(minAndMaxPrice)
-    
 })
 
 meanButton.addEventListener('click', function(e) {
@@ -731,7 +504,6 @@ modeButton.addEventListener('click', function(e) {
     modeCalculate()
 })
 
-
 searchInput.addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
         cleanGridListing()
@@ -740,12 +512,16 @@ searchInput.addEventListener('keypress', function(e) {
     }
 })
 
+searchInput.addEventListener('keyup', function(e) {
+    e.preventDefault()
+    cleanGridListing()
+    resetMeanAndModeButtonText()
+    searchFunction(minAndMaxPrice)
+})
+
 // Executar ao carregar a página:
 loadCards()
-brandCounterFunction()
-fuelCounterFunction()
-createMinYear()
-createMaxYear()
-
-
-
+brandAndFuelCounterLoader()
+createMinAndMaxYear()
+addOfferCar()
+addOfferTimer()

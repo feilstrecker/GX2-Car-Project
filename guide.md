@@ -1,1 +1,0 @@
-32. Exiba um banner no canto inferior da tela com um contador regressivo de 3 horas de duração que atualize a cada segundo, simulando um banner de ofertas com o carro com menor preço da lista de carros com 25% de desconto, exibindo o preço original com tracejado e o preço com desconto com ênfase, ambos com máscara de preço, além do modelo e marca.
