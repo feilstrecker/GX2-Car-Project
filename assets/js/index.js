@@ -338,16 +338,13 @@ function compareByModel(a, b) {
     return a.modelo.localeCompare(b.modelo)
 }
 function compareByPrice(a, b) {
-    if(a.preco < b.preco) return -1
-    if(a.preco > b.preco) return 0
+    return (a.preco < b.preco) ? -1 : ((a.preco > b.preco) ? 1 : 0)
 }
 function compareByKm(a, b) {
-    if(a.km < b.km) return -1
-    if(a.km > b.km) return 0
+    return (a.km < b.km) ? -1 : ((a.km > b.km) ? 1 : 0)
 }
 function compareByYear(a, b) {
-    if(a.ano < b.ano) return -1
-    if(a.ano > b.ano) return 0
+    return (a.ano < b.ano) ? -1 : ((a.ano > b.ano) ? 1 : 0)
 }
 // Calcula a média
 function meanCalculate() {
@@ -383,12 +380,14 @@ function resetMeanAndModeButtonText() {
 // Carrega a quantidade de carros filtrados
 function loadCounter() {
     const counter = gridListing.children.length
-    if(counter != 12) {
-        counterElement.innerHTML = ''
-        const pCounter = document.createElement('p')
-        pCounter.innerText = `Carros filtrados: ${counter}`
-        counterElement.appendChild(pCounter)
-    }
+    data.then(cars => {
+        if(counter != cars.length) {
+            counterElement.innerHTML = ''
+            const pCounter = document.createElement('p')
+            pCounter.innerText = `Carros filtrados: ${counter}`
+            counterElement.appendChild(pCounter)
+        }
+    })
 }
 // Adiciona o carro mais barato em oferta
 function addOfferCar() {

@@ -111,7 +111,7 @@ nav a:hover {
     color: gray;
     width: 10rem;
     position: absolute;
-    top: 40rem;
+    top: 41rem;
     left: 37.5vw;
 }
 
@@ -554,8 +554,8 @@ hr {
 
 @media (max-width: 666px) {
     #counter {
-        top: 49rem;
-        left: 19vw;
+        top: 86rem;
+        left: 20vw;
     }
     main {
         flex-direction: column;
@@ -599,6 +599,9 @@ hr {
         text-align: center;
         gap: 1rem;
     }
+    #counter {
+        top: 96rem;
+    }
 }
 
 @media (max-width: 633px) {
@@ -628,6 +631,9 @@ hr {
         height: 2rem;
         font-size: 1.2rem;
     }
+    #counter {
+        left: 25vw;
+    }
 }
 
 @media (max-width: 400px) {
@@ -635,8 +641,7 @@ hr {
         max-width: 4rem;
     }
     #counter {
-        top: 50rem;
-        left: 10vw;
+        top: 97rem;
     }
     aside {
         margin: 4rem 0 0 0;
@@ -694,5 +699,9 @@ hr {
     }
     nav a {
         font-size: 0.7rem;
+    }
+    #counter {
+        top: 82rem;
+        left: 20vw;
     }
 }
