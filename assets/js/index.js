@@ -381,12 +381,10 @@ function resetMeanAndModeButtonText() {
 function loadCounter() {
     const counter = gridListing.children.length
     data.then(cars => {
-        if(counter != cars.length) {
-            counterElement.innerHTML = ''
-            const pCounter = document.createElement('p')
-            pCounter.innerText = `Carros filtrados: ${counter}`
-            counterElement.appendChild(pCounter)
-        }
+        counterElement.innerHTML = ''
+        const pCounter = document.createElement('p')
+        pCounter.innerText = `Carros filtrados: ${counter}`
+        counterElement.appendChild(pCounter)
     })
 }
 // Adiciona o carro mais barato em oferta

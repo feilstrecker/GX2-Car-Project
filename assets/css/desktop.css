@@ -309,7 +309,7 @@ label {
     background-color: blue;
     width: 10rem;
     transition: ease;
-    transition-duration: 1s;
+    transition-duration: 0.5s;
 }
 
 .car-offer-details button:hover {
@@ -354,7 +354,6 @@ main {
 .box-car {
     display: grid;
     grid-template-rows: repeat(2, 1fr);
-    background-color: white;
     box-shadow: 0 0 2rem -1.3rem black;
     border-radius: 0.5rem;
     width: 15rem;
@@ -365,12 +364,18 @@ main {
     transition-duration: 1s;
 }
 
+.grid-listing:hover > .box-car:not(:hover) {
+    filter: blur(1px);
+}
+
 .img-container {
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100%;
     border-top-right-radius: 0.5rem;
     border-top-left-radius: 0.5rem;
+    transition: ease;
+    transition-duration: 0.5s;
 }
 
 .box-car-shadow {
